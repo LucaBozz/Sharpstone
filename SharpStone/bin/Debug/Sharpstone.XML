@@ -19,7 +19,22 @@
 </member>
 <member name="M:LabProg2016.Sharpstone.filter_deck(Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
 <summary>
- Recursive function that fiters a given deck into a new one with minions only
+ Recursive function that fiters a given deck into a new one with minions only 
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.max_score(System.Double,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
+<summary>
+ Returns the max score value of a deck
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.card_score(LabProg2016.Sharpstone.card)">
+<summary>
+ Returns a card score. The bigger the value the better the card
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.is_empty(Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
+<summary>
+ Checks if the passed deck is empty or not
 </summary>
 </member>
 <member name="M:LabProg2016.Sharpstone.print_card_death(LabProg2016.Sharpstone.card)">

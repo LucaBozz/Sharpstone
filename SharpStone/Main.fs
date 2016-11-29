@@ -98,11 +98,36 @@ let print_turn_no_cards (p1 : player, p2 : player) = printfn "* Both %O and %O h
 let print_card_death (c : card) = printfn "+ %O died (%d overkill)" { c with health = 0 } -c.health
 
 
-/// Recursive function that fiters a given deck into a new one with minions only
+// Aux functions
+
+/// Checks if the passed deck is empty or not
+let is_empty (deck : card list) : bool = if deck = [] then true else false
+
+/// Returns a card score. The bigger the value the better the card
+let card_score (card : card) : float = float(card.attack) / float(card.health)
+
+let rec filter_by_mana (m : int) (deck : card list) : card list = match deck with
+                                                                         [] -> []
+                                                                         |x::xs -> if x.cost <= m then x::filter_by_mana m xs
+                                                                                    else filter_by_mana m xs
+
+/// Returns the max score value of a deck
+let rec max_score (score : float) (deck: card list) : float = match deck with 
+                                                                     [] -> score
+                                                                     |x::xs -> if (card_score x > score) then max_score (card_score x) xs
+                                                                                else max_score score xs
+
+let rec filter_by_score (score : float) (deck : card list) : card list = match deck with 
+                                                                               [] -> []
+                                                                               |x::xs -> if (card_score x < score) then filter_by_score score xs
+                                                                                         else x::filter_by_score score xs
+
+
+/// Recursive function that fiters a given deck into a new one with minions only 
 let rec filter_deck (deck : card list) : card list = match deck with
                                                               [] -> []
-                                                              |x::xs -> if x.typee = "MINION" then x::filter_deck xs
-                                                                         else filter_deck xs;;
+                                                              |x::xs -> if x.typee = "MINION" && x.attack > 0 && x.health > 0 then x::filter_deck xs
+                                                                         else filter_deck xs
 
 // combat mechanics
 //
