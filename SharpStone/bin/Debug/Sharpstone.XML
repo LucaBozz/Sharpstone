@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Sharpstone</name></assembly>
+<members>
+<member name="T:LabProg2016.Sharpstone.player">
+<summary>
+ Defined the player type.
+</summary>
+</member>
+<member name="T:LabProg2016.Sharpstone.deck">
+<summary>
+ Deck type alias.
+</summary>
+</member>
+<member name="T:LabProg2016.Sharpstone.card">
+<summary>
+ Defines the card type.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.filter_deck(Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
+<summary>
+ Recursive function that fiters a given deck into a new one with minions only
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.print_card_death(LabProg2016.Sharpstone.card)">
+<summary>
+ Prints the information of a dead cards. Call this function when a card dies.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.print_turn_no_cards(LabProg2016.Sharpstone.player,LabProg2016.Sharpstone.player)">
+<summary>
+ Prints the information of 2 players when both have no cards. Call this function at each turn no cards have been drawn.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.print_turn_1card(LabProg2016.Sharpstone.player,LabProg2016.Sharpstone.card)">
+<summary>
+ Prints the information of 1 card fighting against a player with no cards. Call this function at each turn when only 1 players have a card.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.print_turn_2cards(LabProg2016.Sharpstone.card,LabProg2016.Sharpstone.card)">
+<summary>
+ Prints the information of 2 cards fighting. Call this function at each turn when both players have a card.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.print_turn_end(LabProg2016.Sharpstone.player,LabProg2016.Sharpstone.player)">
+<summary>
+ Prints the status of the 2 players. Call this function at the end of each turn.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.print_turn_begin(System.Int32)">
+<summary>
+ Prints the turn number header. Call this function at the beginning of each turn.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.parse_deck(System.String)">
+<summary>
+ Parse a JSON deck given the filename.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.unjson``1(System.String)">
+<summary>
+ Convert a JSON string into a typed value.
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.rnd_int(System.Int32,System.Int32)">
+<summary>
+ Generate a random integer within the interval (a, b) inclusively.
+</summary>
+</member>
+</members>
+</doc>

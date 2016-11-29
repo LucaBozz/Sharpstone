@@ -1,0 +1,7 @@
+/Users/lucabozz/Documents/Repos/Unive/Sharpstone/SharpStone/obj/Debug/.NETFramework,Version=v4.6.1.AssemblyAttribute.fs
+/Users/lucabozz/Documents/Repos/Unive/Sharpstone/SharpStone/bin/Debug/Sharpstone.exe.config
+/Users/lucabozz/Documents/Repos/Unive/Sharpstone/SharpStone/bin/Debug/Sharpstone.exe.mdb
+/Users/lucabozz/Documents/Repos/Unive/Sharpstone/SharpStone/bin/Debug/Sharpstone.exe
+/Users/lucabozz/Documents/Repos/Unive/Sharpstone/SharpStone/obj/Debug/Sharpstone.exe
+/Users/lucabozz/Documents/Repos/Unive/Sharpstone/SharpStone/obj/Debug/Sharpstone.exe.mdb
+/Users/lucabozz/Documents/Repos/Unive/Sharpstone/SharpStone/bin/Debug/FSharp.Core.dll

@@ -9,6 +9,8 @@
 
 module LabProg2016.Sharpstone
 
+//#indent "off"
+
 #if INTERACTIVE
 #r "System.Runtime.Serialization.dll"
 #endif
@@ -96,6 +98,11 @@ let print_turn_no_cards (p1 : player, p2 : player) = printfn "* Both %O and %O h
 let print_card_death (c : card) = printfn "+ %O died (%d overkill)" { c with health = 0 } -c.health
 
 
+/// Recursive function that fiters a given deck into a new one with minions only
+let rec filter_deck (deck : card list) : card list = match deck with
+                                                              [] -> []
+                                                              |x::xs -> if x.typee = "MINION" then x::filter_deck xs
+                                                                         else filter_deck xs;;
 
 // combat mechanics
 //
@@ -106,7 +113,14 @@ let fight (deck1 : deck) (deck2 : deck) : player * player * int =
     let p2 = { name ="P2"; life = 30; deck = deck2 }
     p1, p2, 0
 
-// questo e un commento di prova per github
+(* 
+ *utilizzare un ciclo while per il main
+ *while vita > 0 
+ * ...
+ * ...
+ * ...
+ *decrementa vita
+*)
 
 // main code
 //
@@ -120,10 +134,11 @@ let main argv =
                 0
             else
                 let p filename = parse_deck filename    // function for parsing a JSON file defining a deck as a list of cards
-                let d1 = p argv.[0]                     // parse the first argument of the executable (DECK1)
-                let d2 = p argv.[1]                     // parse the second argument of the executable (DECK2)
-                let p1, p2, turn as r = fight d1 d2
-                // print final result
+                let d1 = filter_deck( p argv.[0] )                   // parse the first argument of the executable (DECK1)
+                let d2 = filter_deck( p argv.[1] )                  // parse the second argument of the executable (DECK2)
+                let p1, p2, turn as r = fight d1 d2                 // tutta la tripla (p1, p2, turn) si chiama ora r grazie a AS
+                // print final result - ossia vita giocatore1, giocatore2 e il numero di turni che ci ha messo la partita a terminare ossia turn. 
+                //Attenzione a verificare la vita del giocatore alla fine del turno altrimenti si rischia di conteggiare un turno in più...credo
                 printfn "\nResult:\n\t%d Turns\n\t%O\n\t%O\n\tHash: %X" turn p1 p2 (r.GetHashCode ())
                 0
 
