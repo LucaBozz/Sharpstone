@@ -144,8 +144,8 @@ let draw_card (mana : int) (d : deck) : card = if is_empty (filter_by_mana mana 
 /// Removes a card from a deck
 let rec remove_card (c:card) (d: deck) : deck = match d with
                                                 [] -> []  
-                                                |x::xs -> if x.id = c.id then remove_card c xs
-                                                          else remove_card c (x::xs)
+                                                |x::xs -> if x.id = c.id then xs
+                                                          else x::remove_card c (xs)
 
 
 // combat mechanics
@@ -171,12 +171,12 @@ let fight (deck1 : deck) (deck2 : deck) : player * player * int =
             if not (c1.attack = 0) && not (c2.attack = 0) then 
                   if (c1.health - c2.attack < 0) then p1.life <- p1.life - abs(c1.health - c2.attack)
                   if (c2.health - c1.attack < 0) then p2.life <- p2.life - abs(c2.health - c1.attack)
-                  (*
+
             //Removes card from the game when killed    
             if not (c1.attack = 0) && not (c2.attack = 0) then
                   if (c1.health - c2.attack <= 0) then p1.deck <- remove_card c1 p1.deck 
                   if (c2.health - c1.attack <= 0) then p2.deck <- remove_card c2 p2.deck
-                  *)
+
             // Print overkill info
             if not (c1.attack = 0) && not (c2.attack = 0) then 
                   if (c1.health - c2.attack <= 0) then print_card_death(c1)
