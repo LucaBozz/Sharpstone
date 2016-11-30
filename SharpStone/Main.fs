@@ -137,25 +137,35 @@ let rec filter_deck (d : deck) : deck = match d with
                                                               |x::xs -> if x.typee = "MINION" && x.attack > 0 && x.health > 0 then x::filter_deck xs
                                                                          else filter_deck xs
 
-                                                                       
+
+/// Checks if a card is fake
+let fake_card (c : card) : bool = if c = {id = "";name="";cost=0;typee="";attack=0;health=0} then true else false
+
 /// Returns a card chosen by the amount of mana
-let draw_card (mana : int) (d : deck) : card = if is_empty d then {id = "";name="";cost=0;typee="";attack=0;health=0}
+let draw_card (mana : int) (d : deck) : card = if is_empty (filter_by_mana mana d) then {id = "";name="";cost=0;typee="";attack=0;health=0}
                                                     else get_minion (filter_by_score (max_score 0.0 (filter_by_mana mana d)) (filter_by_mana mana d))
 
 // combat mechanics
 //
 
-// !!! YOU MUST IMPLEMENT THIS !!!b
+// !!! YOU MUST IMPLEMENT THIS !!!
 let fight (deck1 : deck) (deck2 : deck) : player * player * int =
     let p1 = { name ="P1"; life = 30; deck = deck1 }    // dummy players
     let p2 = { name ="P2"; life = 30; deck = deck2 }
     let mutable turn = 0
     let mutable quit = is_empty p1.deck && is_empty p2.deck
-    p1, p2, 0
-   (* while not quit && p1.life > 0 && p2.life > 0 do 
+    while not quit && p1.life > 0 && p2.life > 0 do 
             print_turn_begin turn
             let mana = if turn > 10 then 10 else turn 
-            *)
+            let c1 = draw_card mana p1.deck
+            let c2 = draw_card mana p2.deck
+            if fake_card c1 && fake_card c2 then p1.life <- p1.life
+                else if fake_card c1 then p1.life <- p1.life - c2.attack
+                else if fake_card c2 then p2.life <- p2.life - c1.attack
+                else p2.life <- p2.life
+            turn <- turn+1
+            quit <- true
+    p1, p2, 0
 
 // main code
 //

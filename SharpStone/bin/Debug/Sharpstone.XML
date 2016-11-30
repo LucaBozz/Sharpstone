@@ -22,6 +22,11 @@
  Returns a card chosen by the amount of mana
 </summary>
 </member>
+<member name="M:LabProg2016.Sharpstone.fake_card(LabProg2016.Sharpstone.card)">
+<summary>
+ Checks if a card is fake
+</summary>
+</member>
 <member name="M:LabProg2016.Sharpstone.filter_deck(Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
 <summary>
  Recursive function that fiters a given deck into a new one with minions only 
