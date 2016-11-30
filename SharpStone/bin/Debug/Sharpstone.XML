@@ -17,14 +17,14 @@
  Defines the card type.
 </summary>
 </member>
+<member name="M:LabProg2016.Sharpstone.remove_card(LabProg2016.Sharpstone.card,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
+<summary>
+ Removes a card from a deck
+</summary>
+</member>
 <member name="M:LabProg2016.Sharpstone.draw_card(System.Int32,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
 <summary>
  Returns a card chosen by the amount of mana
-</summary>
-</member>
-<member name="M:LabProg2016.Sharpstone.fake_card(LabProg2016.Sharpstone.card)">
-<summary>
- Checks if a card is fake
 </summary>
 </member>
 <member name="M:LabProg2016.Sharpstone.filter_deck(Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
