@@ -22,6 +22,21 @@
  Recursive function that fiters a given deck into a new one with minions only 
 </summary>
 </member>
+<member name="M:LabProg2016.Sharpstone.get_minion(Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
+<summary>
+ Randomly get a card from a card list
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.get_card_in_pos(System.Int32,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
+<summary>
+ Returns a card from position x from a non-empty deck
+</summary>
+</member>
+<member name="M:LabProg2016.Sharpstone.filter_by_score(System.Double,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
+<summary>
+ Returns all cards with the highest score
+</summary>
+</member>
 <member name="M:LabProg2016.Sharpstone.max_score(System.Double,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
 <summary>
  Returns the max score value of a deck
