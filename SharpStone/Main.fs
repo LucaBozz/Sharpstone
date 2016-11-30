@@ -128,7 +128,7 @@ let rec get_card_in_pos (x : int) (d : deck) : card = match x with
                                                             1 -> d.Head
                                                             |_ -> get_card_in_pos (x-1) d.Tail
 
-/// Randomly get a card from a card list
+/// Randomly gets a card from a card list
 let get_minion (d : deck): card = if d.Length = 1 then d.Head else get_card_in_pos (rnd_int 1 (d.Length)) d
 
 /// Recursive function that fiters a given deck into a new one with minions only 
@@ -137,23 +137,25 @@ let rec filter_deck (d : deck) : deck = match d with
                                                               |x::xs -> if x.typee = "MINION" && x.attack > 0 && x.health > 0 then x::filter_deck xs
                                                                          else filter_deck xs
 
+                                                                       
+/// Returns a card chosen by the amount of mana
+let draw_card (mana : int) (d : deck) : card = if is_empty d then {id = "";name="";cost=0;typee="";attack=0;health=0}
+                                                    else get_minion (filter_by_score (max_score 0.0 (filter_by_mana mana d)) (filter_by_mana mana d))
+
 // combat mechanics
 //
 
-// !!! YOU MUST IMPLEMENT THIS !!!
+// !!! YOU MUST IMPLEMENT THIS !!!b
 let fight (deck1 : deck) (deck2 : deck) : player * player * int =
     let p1 = { name ="P1"; life = 30; deck = deck1 }    // dummy players
     let p2 = { name ="P2"; life = 30; deck = deck2 }
+    let mutable turn = 0
+    let mutable quit = is_empty p1.deck && is_empty p2.deck
     p1, p2, 0
-
-(* 
- *utilizzare un ciclo while per il main
- *while vita > 0 
- * ...
- * ...
- * ...
- *decrementa vita
-*)
+   (* while not quit && p1.life > 0 && p2.life > 0 do 
+            print_turn_begin turn
+            let mana = if turn > 10 then 10 else turn 
+            *)
 
 // main code
 //

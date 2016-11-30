@@ -17,6 +17,11 @@
  Defines the card type.
 </summary>
 </member>
+<member name="M:LabProg2016.Sharpstone.draw_card(System.Int32,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
+<summary>
+ Returns a card chosen by the amount of mana
+</summary>
+</member>
 <member name="M:LabProg2016.Sharpstone.filter_deck(Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
 <summary>
  Recursive function that fiters a given deck into a new one with minions only 
@@ -24,7 +29,7 @@
 </member>
 <member name="M:LabProg2016.Sharpstone.get_minion(Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
 <summary>
- Randomly get a card from a card list
+ Randomly gets a card from a card list
 </summary>
 </member>
 <member name="M:LabProg2016.Sharpstone.get_card_in_pos(System.Int32,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
