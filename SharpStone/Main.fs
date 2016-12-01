@@ -147,6 +147,13 @@ let rec remove_card (c:card) (d: deck) : deck = match d with
                                                 |x::xs -> if x.id = c.id then xs
                                                           else x::remove_card c (xs)
 
+/// Updates cards life 
+let rec update_card_life (c : card ) (d : deck) : deck = match d with
+                                                                [] -> []
+                                                                |x::xs ->if x.id = c.id then x.health <- c.health
+                                                                         x::update_card_life c xs
+                                                                          
+
 
 // combat mechanics
 //
@@ -167,23 +174,34 @@ let fight (deck1 : deck) (deck2 : deck) : player * player * int =
             else if (c2.attack = 0) && not (c1.attack = 0) then print_turn_1card(p2,c1)
             else print_turn_no_cards (p1,p2)
 
-            //Decreases players life
-            if not (c1.attack = 0) && not (c2.attack = 0) then 
-                  if (c1.health - c2.attack < 0) then p1.life <- p1.life - abs(c1.health - c2.attack)
-                  if (c2.health - c1.attack < 0) then p2.life <- p2.life - abs(c2.health - c1.attack)
+            // Decreses player life when one or more minions are missing
+            if (c1.attack = 0) && not (c2.attack = 0) then p1.life <- p1.life - c2.attack
+            if (c2.attack = 0) && not (c1.attack = 0) then p2.life <- p2.life - c1.attack
 
-            //Removes card from the game when killed    
+            // Updates cards life after the battle
+            if not (c1.attack = 0) && not (c2.attack = 0) then 
+                   c1.health <- c1.health - c2.attack
+                   c2.health <- c2.health - c1.attack
+
+            // Decreases players life in case of overkill
+            if not (c1.attack = 0) && not (c2.attack = 0) then 
+                  if (c1.health < 0) then p1.life <- p1.life - abs(c1.health)
+                  if (c2.health < 0) then p2.life <- p2.life - abs(c2.health)
+                 
+            // Updates card life in decks after the battle
+            if not (c1.attack = 0) && not (c2.attack = 0) then 
+                   p1.deck <- update_card_life c1 p1.deck
+                   p2.deck <- update_card_life c2 p2.deck
+
+            // Removes card from the game when killed    
             if not (c1.attack = 0) && not (c2.attack = 0) then
-                  if (c1.health - c2.attack <= 0) then p1.deck <- remove_card c1 p1.deck 
-                  if (c2.health - c1.attack <= 0) then p2.deck <- remove_card c2 p2.deck
+                  if (c1.health <= 0) then p1.deck <- remove_card c1 p1.deck 
+                  if (c2.health <= 0) then p2.deck <- remove_card c2 p2.deck
 
             // Print overkill info
             if not (c1.attack = 0) && not (c2.attack = 0) then 
-                  if (c1.health - c2.attack <= 0) then print_card_death(c1)
-                  if (c2.health - c1.attack <= 0) then print_card_death(c2)
-
-            if (c1.attack = 0) && not (c2.attack = 0) then p1.life <- p1.life - c2.attack
-            if (c2.attack = 0) && not (c1.attack = 0) then p2.life <- p2.life - c1.attack
+                  if (c1.health <= 0) then print_card_death(c1)
+                  if (c2.health <= 0) then print_card_death(c2)
 
             print_turn_end(p1,p2)
             turn <- turn+1
