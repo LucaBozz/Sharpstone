@@ -23,7 +23,7 @@ open System.Text
 // globals
 //
 
-let rand = new Random (23)    // remove seed argument for making randomness indeterministic
+let rand = new Random ()    // remove seed argument for making randomness indeterministic
 
 /// Generate a random integer within the interval (a, b) inclusively.
 let rnd_int a b = rand.Next (a, b + 1) 
@@ -209,7 +209,8 @@ let fight (deck1 : deck) (deck2 : deck) : player * player * int =
             print_turn_end(p1,p2)
             turn <- turn+1
             quit <- is_empty p1.deck && is_empty p2.deck
-    //if (quit) then
+
+    //Checks the match result
     if (p1.life = p2.life) then printfn("%O and %O tied!") p1 p2
     else if (p1.life < p2.life) then printfn("%O has defeated %O") p2 p1
     else if (p1.life > p2.life) then printfn("%O has defeated %O") p1 p2
