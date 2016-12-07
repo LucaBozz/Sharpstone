@@ -129,7 +129,7 @@ let rec get_card_in_pos (x : int) (d : deck) : card = match x with
                                                             |_ -> get_card_in_pos (x-1) d.Tail
 
 /// Randomly gets a card from a card list
-let get_minion (d : deck): card = if d.Length = 1 then d.Head else get_card_in_pos (rnd_int 1 (d.Length)) d
+let get_minion (d : deck): card = if (d.Length = 1) then d.Head else get_card_in_pos (rnd_int 1 (d.Length)) d
 
 /// Recursive function that fiters a given deck into a new one with minions only 
 let rec filter_deck (d : deck) : deck = match d with
@@ -160,8 +160,8 @@ let rec update_card_life (c : card ) (d : deck) : deck = match d with
 
 // !!! YOU MUST IMPLEMENT THIS !!!
 let fight (deck1 : deck) (deck2 : deck) : player * player * int =
-    let p1 = { name ="P1"; life = 30; deck = deck1 }    // dummy players
-    let p2 = { name ="P2"; life = 30; deck = deck2 }
+    let p1 = { name ="P1"; life = 30; deck = filter_deck(deck1) }    // dummy players
+    let p2 = { name ="P2"; life = 30; deck = filter_deck(deck2) }
     let mutable turn = 1
     let mutable quit = is_empty p1.deck && is_empty p2.deck
     while not quit && p1.life > 0 && p2.life > 0 do 
@@ -169,15 +169,18 @@ let fight (deck1 : deck) (deck2 : deck) : player * player * int =
             let mana = if turn > 10 then 10 else turn 
             let c1 = draw_card mana p1.deck
             let c2 = draw_card mana p2.deck
+
             if not (c1.attack = 0) && not (c2.attack = 0) then print_turn_2cards (c1,c2)
             else if (c1.attack = 0) && not (c2.attack = 0) then print_turn_1card(p1,c2)
             else if (c2.attack = 0) && not (c1.attack = 0) then print_turn_1card(p2,c1)
             else print_turn_no_cards (p1,p2)
 
-            // Decreses player life when one or more minions are missing
+            // Decreses player life when one minion is missing
             if (c1.attack = 0) && not (c2.attack = 0) then p1.life <- p1.life - c2.attack
             if (c2.attack = 0) && not (c1.attack = 0) then p2.life <- p2.life - c1.attack
 
+
+            ///Two minions fight
             // Updates cards life after the battle
             if not (c1.attack = 0) && not (c2.attack = 0) then 
                    c1.health <- c1.health - c2.attack
@@ -198,7 +201,7 @@ let fight (deck1 : deck) (deck2 : deck) : player * player * int =
                   if (c1.health <= 0) then p1.deck <- remove_card c1 p1.deck 
                   if (c2.health <= 0) then p2.deck <- remove_card c2 p2.deck
 
-            // Print overkill info
+            // Print card death
             if not (c1.attack = 0) && not (c2.attack = 0) then 
                   if (c1.health <= 0) then print_card_death(c1)
                   if (c2.health <= 0) then print_card_death(c2)
@@ -206,7 +209,13 @@ let fight (deck1 : deck) (deck2 : deck) : player * player * int =
             print_turn_end(p1,p2)
             turn <- turn+1
             quit <- is_empty p1.deck && is_empty p2.deck
+    //if (quit) then
+    if (p1.life = p2.life) then printfn("%O and %O tied!") p1 p2
+    else if (p1.life < p2.life) then printfn("%O has defeated %O") p2 p1
+    else if (p1.life > p2.life) then printfn("%O has defeated %O") p1 p2
+    
     p1, p2, (turn-1)
+
 
 // main code
 //
@@ -220,11 +229,10 @@ let main argv =
                 0
             else
                 let p filename = parse_deck filename    // function for parsing a JSON file defining a deck as a list of cards
-                let d1 = filter_deck( p argv.[0] )                   // parse the first argument of the executable (DECK1)
-                let d2 = filter_deck( p argv.[1] )                  // parse the second argument of the executable (DECK2)
-                let p1, p2, turn as r = fight d1 d2                 // tutta la tripla (p1, p2, turn) si chiama ora r grazie a AS
-                // print final result - ossia vita giocatore1, giocatore2 e il numero di turni che ci ha messo la partita a terminare ossia turn. 
-                //Attenzione a verificare la vita del giocatore alla fine del turno altrimenti si rischia di conteggiare un turno in più...credo
+                let d1 = p argv.[0]                  // parse the first argument of the executable (DECK1)
+                let d2 = p argv.[1]                 // parse the second argument of the executable (DECK2)
+                let p1, p2, turn as r = fight d1 d2                 
+
                 printfn "\nResult:\n\t%d Turns\n\t%O\n\t%O\n\tHash: %X" turn p1 p2 (r.GetHashCode ())
                 0
 

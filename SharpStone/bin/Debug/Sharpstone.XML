@@ -17,6 +17,11 @@
  Defines the card type.
 </summary>
 </member>
+<member name="M:LabProg2016.Sharpstone.main(System.String[])">
+<summary>
+Two minions fight
+</summary>
+</member>
 <member name="M:LabProg2016.Sharpstone.update_card_life(LabProg2016.Sharpstone.card,Microsoft.FSharp.Collections.FSharpList{LabProg2016.Sharpstone.card})">
 <summary>
  Updates cards life 
